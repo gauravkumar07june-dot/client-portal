@@ -86,7 +86,7 @@ function Contact({ onSubmit }) {
   const whatsappHref = `https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`
 
   return (
-    <section className="contact-section">
+    <section className="contact-section" id="contact">
       <div className="contact-inner">
         <motion.div
           className="contact-header"

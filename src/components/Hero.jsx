@@ -23,7 +23,7 @@ function Hero({
   onViewProgress,
 }) {
   return (
-    <section className="hero-section">
+    <section className="hero-section" id="hero">
       <div className="hero-grid" aria-hidden="true" />
 
       <motion.div
