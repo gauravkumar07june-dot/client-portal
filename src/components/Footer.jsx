@@ -1,4 +1,7 @@
+import { useState } from 'react'
 import siteConfig from '../config/site.js'
+import { useAuth } from '../context/AuthContext.jsx'
+import AdminLoginModal from './AdminLoginModal.jsx'
 import './Footer.css'
 
 const SOCIAL_ICON_PATHS = {
@@ -22,6 +25,9 @@ function SocialIcon({ id }) {
 }
 
 function Footer({ company, socialLinks = [], onSocialClick }) {
+  const { isAuthenticated, user, authLoading, signOut } = useAuth()
+  const [loginOpen, setLoginOpen] = useState(false)
+
   if (!company) return null
 
   const year = new Date().getFullYear()
@@ -61,8 +67,30 @@ function Footer({ company, socialLinks = [], onSocialClick }) {
           <span>
             © {year} {siteConfig.companyName}. All rights reserved.
           </span>
+          {!authLoading && (
+            <span className="footer-admin">
+              {isAuthenticated ? (
+                <>
+                  Signed in as {user.email} ·{' '}
+                  <button type="button" className="footer-admin-link" onClick={() => signOut()}>
+                    Log out
+                  </button>
+                </>
+              ) : (
+                <button
+                  type="button"
+                  className="footer-admin-link"
+                  onClick={() => setLoginOpen(true)}
+                >
+                  Admin Login
+                </button>
+              )}
+            </span>
+          )}
         </div>
       </div>
+
+      <AdminLoginModal open={loginOpen} onClose={() => setLoginOpen(false)} />
     </footer>
   )
 }
