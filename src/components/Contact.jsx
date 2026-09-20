@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { motion } from 'motion/react'
+import siteConfig from '../config/site.js'
 import './Contact.css'
 
 const fadeUp = {
@@ -9,9 +10,8 @@ const fadeUp = {
 
 const viewport = { once: true, amount: 0.3 }
 
-// Placeholder demo number (555 = reserved fictional range) — swap for the real one.
-const WHATSAPP_NUMBER = '15550102984'
 const WHATSAPP_MESSAGE = 'Hi! I have a question about the project.'
+const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mrpbekgo'
 
 function SendIcon() {
   return (
@@ -27,6 +27,22 @@ function SendIcon() {
   )
 }
 
+function SpinnerIcon() {
+  return (
+    <svg className="contact-submit-icon contact-spinner" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+      <circle
+        cx="10"
+        cy="10"
+        r="7.5"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeDasharray="35 12"
+      />
+    </svg>
+  )
+}
+
 function WhatsAppIcon() {
   return (
     <svg className="whatsapp-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -37,20 +53,37 @@ function WhatsAppIcon() {
 
 function Contact({ onSubmit }) {
   const [form, setForm] = useState({ name: '', email: '', message: '' })
-  const [submitted, setSubmitted] = useState(false)
+  const [status, setStatus] = useState('idle') // idle | sending | success | error
 
   function handleChange(event) {
     const { name, value } = event.target
     setForm((prev) => ({ ...prev, [name]: value }))
   }
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault()
-    onSubmit?.(form)
-    setSubmitted(true)
+    setStatus('sending')
+
+    try {
+      const response = await fetch(FORMSPREE_ENDPOINT, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify(form),
+      })
+
+      if (!response.ok) throw new Error('Request failed')
+
+      onSubmit?.(form)
+      setStatus('success')
+    } catch {
+      setStatus('error')
+    }
   }
 
-  const whatsappHref = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`
+  const whatsappHref = `https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`
 
   return (
     <section className="contact-section">
@@ -76,51 +109,57 @@ function Contact({ onSubmit }) {
           viewport={viewport}
         >
           <form className="contact-form" onSubmit={handleSubmit}>
-            {submitted ? (
+            {status === 'success' ? (
               <div className="contact-success">
-                <p>
-                  Thanks{form.name ? `, ${form.name.split(' ')[0]}` : ''} — your message has
-                  been received. We&rsquo;ll get back to you shortly.
-                </p>
+                <p>Message sent — we&rsquo;ll get back to you shortly.</p>
               </div>
             ) : (
               <>
-                <label className="contact-field">
-                  <span>Name</span>
-                  <input
-                    type="text"
-                    name="name"
-                    value={form.name}
-                    onChange={handleChange}
-                    autoComplete="name"
-                    required
-                  />
-                </label>
-                <label className="contact-field">
-                  <span>Email</span>
-                  <input
-                    type="email"
-                    name="email"
-                    value={form.email}
-                    onChange={handleChange}
-                    autoComplete="email"
-                    required
-                  />
-                </label>
-                <label className="contact-field">
-                  <span>Message</span>
-                  <textarea
-                    name="message"
-                    rows="4"
-                    value={form.message}
-                    onChange={handleChange}
-                    required
-                  />
-                </label>
-                <button type="submit" className="contact-submit">
-                  Send Message
-                  <SendIcon />
+                <fieldset className="contact-fieldset" disabled={status === 'sending'}>
+                  <label className="contact-field">
+                    <span>Name</span>
+                    <input
+                      type="text"
+                      name="name"
+                      value={form.name}
+                      onChange={handleChange}
+                      autoComplete="name"
+                      required
+                    />
+                  </label>
+                  <label className="contact-field">
+                    <span>Email</span>
+                    <input
+                      type="email"
+                      name="email"
+                      value={form.email}
+                      onChange={handleChange}
+                      autoComplete="email"
+                      required
+                    />
+                  </label>
+                  <label className="contact-field">
+                    <span>Message</span>
+                    <textarea
+                      name="message"
+                      rows="4"
+                      value={form.message}
+                      onChange={handleChange}
+                      required
+                    />
+                  </label>
+                </fieldset>
+
+                <button type="submit" className="contact-submit" disabled={status === 'sending'}>
+                  {status === 'sending' ? 'Sending…' : 'Send Message'}
+                  {status === 'sending' ? <SpinnerIcon /> : <SendIcon />}
                 </button>
+
+                {status === 'error' && (
+                  <p className="contact-error" role="alert">
+                    Something went wrong — please try again, or reach out on WhatsApp.
+                  </p>
+                )}
               </>
             )}
           </form>

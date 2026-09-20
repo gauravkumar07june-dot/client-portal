@@ -3,9 +3,8 @@
 
 const mockAbout = {
   company: {
-    name: 'Meridian Construction Group',
     description:
-      'Meridian has delivered residential and mixed-use projects across the region since 1998. On this project, our team manages every phase — from sitework to final walkthrough — so you always know exactly where things stand.',
+      'We have delivered residential and mixed-use projects across the region since 1998. On this project, our team manages every phase — from sitework to final walkthrough — so you always know exactly where things stand.',
   },
   team: [
     { id: 'member-01', name: 'Alex Rivera', role: 'Project Executive' },

@@ -1,4 +1,5 @@
 import { motion } from 'motion/react'
+import siteConfig from '../config/site.js'
 import './About.css'
 
 const fadeUp = {
@@ -41,7 +42,7 @@ function About({ company, team = [] }) {
           whileInView="show"
           viewport={viewport}
         >
-          <h2 className="about-title">About {company.name}</h2>
+          <h2 className="about-title">About {siteConfig.companyName}</h2>
           <p className="about-description">{company.description}</p>
         </motion.div>
 

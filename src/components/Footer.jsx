@@ -1,3 +1,4 @@
+import siteConfig from '../config/site.js'
 import './Footer.css'
 
 const SOCIAL_ICON_PATHS = {
@@ -30,10 +31,10 @@ function Footer({ company, socialLinks = [], onSocialClick }) {
       <div className="footer-inner">
         <div className="footer-main">
           <div className="footer-company">
-            <span className="footer-company-name">{company.name}</span>
+            <span className="footer-company-name">{siteConfig.companyName}</span>
             <p className="footer-address">{company.address}</p>
-            <a className="footer-link" href={`mailto:${company.email}`}>
-              {company.email}
+            <a className="footer-link" href={`mailto:${siteConfig.contactEmail}`}>
+              {siteConfig.contactEmail}
             </a>
             <a className="footer-link" href={`tel:${company.phone.replace(/[^+\d]/g, '')}`}>
               {company.phone}
@@ -58,7 +59,7 @@ function Footer({ company, socialLinks = [], onSocialClick }) {
 
         <div className="footer-bottom">
           <span>
-            © {year} {company.name}. All rights reserved.
+            © {year} {siteConfig.companyName}. All rights reserved.
           </span>
         </div>
       </div>
