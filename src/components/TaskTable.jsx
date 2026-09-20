@@ -3,14 +3,14 @@ import { motion } from 'motion/react'
 import './TaskTable.css'
 
 const STATUS_META = {
-  'on-track': { label: 'On Track', tone: 'good' },
+  on_track: { label: 'On Track', tone: 'good' },
   delayed: { label: 'Delayed', tone: 'critical' },
   completed: { label: 'Completed', tone: 'accent' },
 }
 
 const FILTERS = [
   { key: 'all', label: 'All' },
-  { key: 'on-track', label: 'On Track' },
+  { key: 'on_track', label: 'On Track' },
   { key: 'delayed', label: 'Delayed' },
   { key: 'completed', label: 'Completed' },
 ]
@@ -23,6 +23,7 @@ const fadeUp = {
 const viewport = { once: true, amount: 0.2 }
 
 function formatDate(isoDate) {
+  if (!isoDate) return '—'
   return new Date(isoDate).toLocaleDateString('en-US', {
     month: 'short',
     day: 'numeric',
@@ -32,6 +33,7 @@ function formatDate(isoDate) {
 
 function StatusBadge({ status }) {
   const meta = STATUS_META[status]
+  if (!meta) return null
   return (
     <span className={`status-badge status-badge--${meta.tone}`}>
       <span className="status-badge-dot" aria-hidden="true" />
@@ -40,18 +42,47 @@ function StatusBadge({ status }) {
   )
 }
 
-function TaskTable({ tasks }) {
+function TableSkeletonRows() {
+  return (
+    <tbody aria-hidden="true">
+      {[0, 1, 2, 3, 4].map((i) => (
+        <tr key={i}>
+          <td data-label="Package">
+            <span className="skeleton-block" style={{ width: '70%', height: 14 }} />
+          </td>
+          <td data-label="Status">
+            <span className="skeleton-block" style={{ width: 84, height: 22, borderRadius: 999 }} />
+          </td>
+          <td data-label="Owner">
+            <span className="skeleton-block" style={{ width: '55%', height: 14 }} />
+          </td>
+          <td data-label="Target date">
+            <span className="skeleton-block" style={{ width: '60%', height: 14 }} />
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  )
+}
+
+function TaskTable({ packages }) {
   const [filter, setFilter] = useState('all')
+  const loading = packages === null
 
   const counts = useMemo(() => {
-    const c = { all: tasks.length, 'on-track': 0, delayed: 0, completed: 0 }
-    tasks.forEach((task) => {
-      c[task.status] += 1
+    if (!packages) return { all: 0, on_track: 0, delayed: 0, completed: 0 }
+    const c = { all: packages.length, on_track: 0, delayed: 0, completed: 0 }
+    packages.forEach((pkg) => {
+      c[pkg.status] += 1
     })
     return c
-  }, [tasks])
+  }, [packages])
 
-  const filtered = filter === 'all' ? tasks : tasks.filter((task) => task.status === filter)
+  const filtered = !packages
+    ? []
+    : filter === 'all'
+      ? packages
+      : packages.filter((pkg) => pkg.status === filter)
 
   return (
     <section className="tasks-section">
@@ -67,20 +98,22 @@ function TaskTable({ tasks }) {
           <p className="tasks-subtitle">Status across every work package on the project.</p>
         </motion.div>
 
-        <div className="tasks-filters" role="group" aria-label="Filter packages by status">
-          {FILTERS.map((f) => (
-            <button
-              key={f.key}
-              type="button"
-              className={`tasks-filter${filter === f.key ? ' is-active' : ''}`}
-              onClick={() => setFilter(f.key)}
-              aria-pressed={filter === f.key}
-            >
-              {f.label}
-              <span className="tasks-filter-count">{counts[f.key]}</span>
-            </button>
-          ))}
-        </div>
+        {!loading && packages.length > 0 && (
+          <div className="tasks-filters" role="group" aria-label="Filter packages by status">
+            {FILTERS.map((f) => (
+              <button
+                key={f.key}
+                type="button"
+                className={`tasks-filter${filter === f.key ? ' is-active' : ''}`}
+                onClick={() => setFilter(f.key)}
+                aria-pressed={filter === f.key}
+              >
+                {f.label}
+                <span className="tasks-filter-count">{counts[f.key]}</span>
+              </button>
+            ))}
+          </div>
+        )}
 
         <motion.div
           className="tasks-table-wrap"
@@ -89,29 +122,37 @@ function TaskTable({ tasks }) {
           whileInView="show"
           viewport={viewport}
         >
-          <table className="tasks-table">
-            <thead>
-              <tr>
-                <th scope="col">Package</th>
-                <th scope="col">Status</th>
-                <th scope="col">Owner</th>
-                <th scope="col">Target date</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filtered.map((task) => (
-                <tr key={task.id}>
-                  <td data-label="Package">{task.packageName}</td>
-                  <td data-label="Status">
-                    <StatusBadge status={task.status} />
-                  </td>
-                  <td data-label="Owner">{task.owner}</td>
-                  <td data-label="Target date">{formatDate(task.targetDate)}</td>
+          {!loading && packages.length === 0 ? (
+            <p className="tasks-empty">No packages yet.</p>
+          ) : (
+            <table className="tasks-table">
+              <thead>
+                <tr>
+                  <th scope="col">Package</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Owner</th>
+                  <th scope="col">Target date</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-          {filtered.length === 0 && (
+              </thead>
+              {loading ? (
+                <TableSkeletonRows />
+              ) : (
+                <tbody>
+                  {filtered.map((pkg) => (
+                    <tr key={pkg.id}>
+                      <td data-label="Package">{pkg.name}</td>
+                      <td data-label="Status">
+                        <StatusBadge status={pkg.status} />
+                      </td>
+                      <td data-label="Owner">{pkg.owner}</td>
+                      <td data-label="Target date">{formatDate(pkg.targetDate)}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              )}
+            </table>
+          )}
+          {!loading && packages.length > 0 && filtered.length === 0 && (
             <p className="tasks-empty">No packages match this filter.</p>
           )}
         </motion.div>

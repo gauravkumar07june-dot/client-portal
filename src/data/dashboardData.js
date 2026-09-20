@@ -1,15 +1,11 @@
 // Mock data shaped like a future API response — swap fetchDashboardData's
-// body for a real request without touching any component.
+// body for a real request without touching any component. Progress by
+// building now comes live from the "packages" table (see packagesData.js);
+// these fields are still mock on purpose (submittal status and material
+// delivery aren't wired to Supabase yet).
 
 const mockDashboardData = {
   overallProgress: 62,
-  buildingProgress: [
-    { id: 'building-a', label: 'Building A', percent: 78 },
-    { id: 'building-b', label: 'Building B', percent: 54 },
-    { id: 'parking-structure', label: 'Parking Structure', percent: 41 },
-    { id: 'clubhouse', label: 'Clubhouse', percent: 88 },
-    { id: 'site-utilities', label: 'Site Utilities', percent: 65 },
-  ],
   submittals: {
     approved: 142,
     underReview: 37,

@@ -35,7 +35,20 @@ function OverallProgressCard({ percent }) {
   )
 }
 
-function BuildingProgressCard({ data }) {
+function BarChartSkeleton() {
+  return (
+    <div className="bar-chart" aria-hidden="true">
+      {[70, 45, 85, 55].map((width, i) => (
+        <div className="bar-row-skeleton" key={i}>
+          <span className="skeleton-block bar-label-skeleton" />
+          <span className="skeleton-block bar-track-skeleton" style={{ width: `${width}%` }} />
+        </div>
+      ))}
+    </div>
+  )
+}
+
+function BuildingProgressCard({ packages }) {
   return (
     <motion.div
       className="dash-card dash-card--bar"
@@ -45,25 +58,35 @@ function BuildingProgressCard({ data }) {
       viewport={viewport}
     >
       <span className="dash-card-label">Progress by building / package</span>
-      <div className="bar-chart" role="img" aria-label="Percent complete by building or work package">
-        {data.map((row, i) => (
-          <div className="bar-row" key={row.id}>
-            <span className="bar-label">{row.label}</span>
-            <div className="bar-track">
-              <motion.div
-                className="bar-fill"
-                initial={{ width: 0 }}
-                whileInView={{ width: `${row.percent}%` }}
-                viewport={viewport}
-                transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: i * 0.08 }}
-              />
+      {packages === null ? (
+        <BarChartSkeleton />
+      ) : packages.length === 0 ? (
+        <p className="dash-empty">No packages yet.</p>
+      ) : (
+        <div
+          className="bar-chart"
+          role="img"
+          aria-label="Percent complete by building or work package"
+        >
+          {packages.map((row, i) => (
+            <div className="bar-row" key={row.id}>
+              <span className="bar-label">{row.name}</span>
+              <div className="bar-track">
+                <motion.div
+                  className="bar-fill"
+                  initial={{ width: 0 }}
+                  whileInView={{ width: `${row.percent}%` }}
+                  viewport={viewport}
+                  transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: i * 0.08 }}
+                />
+              </div>
+              <span className="bar-value">
+                <CountUp value={row.percent} suffix="%" duration={1} />
+              </span>
             </div>
-            <span className="bar-value">
-              <CountUp value={row.percent} suffix="%" duration={1} />
-            </span>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
     </motion.div>
   )
 }
@@ -190,11 +213,11 @@ function MaterialDeliveryCard({ data }) {
   )
 }
 
-function Dashboard({ data }) {
+function Dashboard({ data, packages }) {
   if (!data) return null
 
   return (
-    <section className="dashboard-section">
+    <section className="dashboard-section" id="dashboard">
       <div className="dashboard-inner">
         <motion.div
           className="dashboard-header"
@@ -209,7 +232,7 @@ function Dashboard({ data }) {
 
         <div className="dashboard-grid">
           <OverallProgressCard percent={data.overallProgress} />
-          <BuildingProgressCard data={data.buildingProgress} />
+          <BuildingProgressCard packages={packages} />
           <SubmittalDonutCard submittals={data.submittals} />
           <MaterialDeliveryCard data={data.materialDeliveries} />
         </div>
