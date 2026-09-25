@@ -1,20 +1,21 @@
 .dashboard-section {
-  --chart-surface: #1f2028;
+  --chart-surface: #1a1c21;
   --text-primary: #ffffff;
   --text-secondary: #b8bac2;
   --text-muted: #8b8d97;
   --hairline: rgba(255, 255, 255, 0.08);
   --border-ring: rgba(255, 255, 255, 0.08);
-  --series-1: #c084fc;
-  --series-1-track: rgba(192, 132, 252, 0.15);
+  --series-1: #f59e0b;
+  --series-1-track: rgba(245, 158, 11, 0.15);
   --status-good: #0ca30c;
   --status-warning: #fab219;
   --status-critical: #d03b3b;
 
-  background: #16171d;
+  background: #0f1115;
   color: var(--text-secondary);
-  padding: 56px 20px 80px;
+  padding: 80px 20px 80px;
   box-sizing: border-box;
+  clip-path: polygon(0 28px, 100% 0, 100% 100%, 0 100%);
 }
 
 .dashboard-inner {
@@ -27,12 +28,28 @@
   margin-bottom: 28px;
 }
 
+.dashboard-title-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 6px;
+}
+
+.dashboard-title-icon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  color: var(--series-1);
+}
+
 .dashboard-title {
   font-family: var(--heading, system-ui, sans-serif);
   font-size: clamp(24px, 5vw, 32px);
-  font-weight: 600;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
   color: var(--text-primary);
-  margin: 0 0 6px;
+  margin: 0;
 }
 
 .dashboard-subtitle {
@@ -138,9 +155,19 @@
 }
 
 .dash-empty {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   margin: 0;
   padding: 12px 0;
   font-size: 14px;
+  color: var(--text-muted);
+}
+
+.dash-empty-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
   color: var(--text-muted);
 }
 

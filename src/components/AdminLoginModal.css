@@ -11,14 +11,14 @@
 }
 
 .login-modal {
-  --chart-surface: #1f2028;
-  --field-bg: #16171d;
+  --chart-surface: #1a1c21;
+  --field-bg: #0f1115;
   --text-primary: #ffffff;
   --text-secondary: #b8bac2;
   --text-muted: #8b8d97;
   --hairline: rgba(255, 255, 255, 0.08);
-  --accent: #c084fc;
-  --accent-ink: #16171d;
+  --accent: #f59e0b;
+  --accent-ink: #0f1115;
 
   width: 100%;
   max-width: 360px;
@@ -39,7 +39,9 @@
 .login-modal-header h2 {
   font-family: var(--heading, system-ui, sans-serif);
   font-size: 18px;
-  font-weight: 600;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
   color: var(--text-primary);
   margin: 0;
 }
@@ -101,7 +103,7 @@
 .login-field input:focus-visible {
   outline: none;
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(192, 132, 252, 0.2);
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2);
 }
 
 .login-error {
@@ -117,18 +119,20 @@
   gap: 8px;
   padding: 12px 20px;
   border: none;
-  border-radius: 10px;
+  border-radius: 3px;
   background: var(--accent);
   color: var(--accent-ink);
-  font-size: 15px;
-  font-weight: 600;
-  font-family: inherit;
+  font-family: var(--heading, system-ui, sans-serif);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
   cursor: pointer;
   transition: background 0.2s ease;
 }
 
 .login-submit:hover:not(:disabled) {
-  background: #d3a4fd;
+  background: #fb923c;
 }
 
 .login-submit:disabled {

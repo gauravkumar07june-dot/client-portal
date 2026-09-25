@@ -1,5 +1,6 @@
 import { motion } from 'motion/react'
 import siteConfig from '../config/site.js'
+import { HardHatIcon } from './icons/ConstructionIcons.jsx'
 import './About.css'
 
 const fadeUp = {
@@ -58,14 +59,20 @@ function About({ company, team }) {
           whileInView="show"
           viewport={viewport}
         >
-          <h2 className="about-title">About {siteConfig.companyName}</h2>
+          <div className="about-title-row">
+            <HardHatIcon className="about-title-icon" />
+            <h2 className="about-title">About {siteConfig.companyName}</h2>
+          </div>
           <p className="about-description">{company.description}</p>
         </motion.div>
 
         {loading ? (
           <TeamSkeleton />
         ) : team.length === 0 ? (
-          <p className="about-empty">No team members yet.</p>
+          <p className="about-empty">
+            <HardHatIcon className="about-empty-icon" />
+            No team members yet.
+          </p>
         ) : (
           <motion.ul
             className="team-grid"

@@ -43,9 +43,12 @@ function Navbar() {
   return (
     <nav className="navbar">
       <div className="navbar-inner">
-        <button type="button" className="navbar-logo" onClick={() => handleLinkClick('hero')}>
-          {siteConfig.companyName}
-        </button>
+        <div className="navbar-logo-wrap">
+          <button type="button" className="navbar-logo" onClick={() => handleLinkClick('hero')}>
+            {siteConfig.companyName}
+          </button>
+          <span className="navbar-hazard" aria-hidden="true" />
+        </div>
 
         <ul className="navbar-links">
           {NAV_LINKS.map((link) => (

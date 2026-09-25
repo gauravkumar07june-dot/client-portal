@@ -1,5 +1,6 @@
 import { motion } from 'motion/react'
 import CountUp from './CountUp.jsx'
+import { CraneIcon } from './icons/ConstructionIcons.jsx'
 import './Dashboard.css'
 
 const fadeUp = {
@@ -61,7 +62,10 @@ function BuildingProgressCard({ packages }) {
       {packages === null ? (
         <BarChartSkeleton />
       ) : packages.length === 0 ? (
-        <p className="dash-empty">No packages yet.</p>
+        <p className="dash-empty">
+          <CraneIcon className="dash-empty-icon" />
+          No packages yet.
+        </p>
       ) : (
         <div
           className="bar-chart"
@@ -226,7 +230,10 @@ function Dashboard({ data, packages }) {
           whileInView="show"
           viewport={viewport}
         >
-          <h2 className="dashboard-title">Project Dashboard</h2>
+          <div className="dashboard-title-row">
+            <CraneIcon className="dashboard-title-icon" />
+            <h2 className="dashboard-title">Project Dashboard</h2>
+          </div>
           <p className="dashboard-subtitle">A live snapshot of where things stand.</p>
         </motion.div>
 

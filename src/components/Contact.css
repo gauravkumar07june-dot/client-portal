@@ -1,18 +1,19 @@
 .contact-section {
-  --chart-surface: #1f2028;
-  --field-bg: #16171d;
+  --chart-surface: #1a1c21;
+  --field-bg: #0f1115;
   --text-primary: #ffffff;
   --text-secondary: #b8bac2;
   --text-muted: #8b8d97;
   --hairline: rgba(255, 255, 255, 0.08);
   --border-ring: rgba(255, 255, 255, 0.08);
-  --accent: #c084fc;
-  --accent-ink: #16171d;
+  --accent: #f59e0b;
+  --accent-ink: #0f1115;
 
-  background: #16171d;
+  background: #0f1115;
   color: var(--text-secondary);
-  padding: 0 20px 80px;
+  padding: 32px 20px 80px;
   box-sizing: border-box;
+  clip-path: polygon(0 24px, 100% 0, 100% 100%, 0 100%);
 }
 
 .contact-inner {
@@ -28,7 +29,9 @@
 .contact-title {
   font-family: var(--heading, system-ui, sans-serif);
   font-size: clamp(24px, 5vw, 32px);
-  font-weight: 600;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
   color: var(--text-primary);
   margin: 0 0 8px;
 }
@@ -104,7 +107,7 @@
 .contact-field textarea:focus-visible {
   outline: none;
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(192, 132, 252, 0.2);
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2);
 }
 
 .contact-submit {
@@ -115,18 +118,20 @@
   align-self: flex-start;
   padding: 12px 24px;
   border: none;
-  border-radius: 10px;
+  border-radius: 3px;
   background: var(--accent);
   color: var(--accent-ink);
-  font-size: 15px;
-  font-weight: 600;
-  font-family: inherit;
+  font-family: var(--heading, system-ui, sans-serif);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
   cursor: pointer;
   transition: background 0.2s ease;
 }
 
 .contact-submit:hover:not(:disabled) {
-  background: #d3a4fd;
+  background: #fb923c;
 }
 
 .contact-submit:focus-visible {
@@ -195,8 +200,8 @@
   gap: 8px;
   padding: 10px 18px;
   border-radius: 999px;
-  border: 1px solid rgba(192, 132, 252, 0.35);
-  background: rgba(192, 132, 252, 0.1);
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  background: rgba(245, 158, 11, 0.1);
   color: var(--accent);
   font-size: 14px;
   font-weight: 600;

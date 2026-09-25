@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
 import { ALLOWED_EXTENSIONS, MAX_FILE_SIZE_MB, uploadDocument } from '../data/documentsData.js'
 import { useAuth } from '../context/AuthContext.jsx'
+import { BlueprintIcon } from './icons/ConstructionIcons.jsx'
 import './DocumentLibrary.css'
 
 const CATEGORY_ORDER = ['DPR', 'Submittals', 'Drawings']
@@ -250,7 +251,10 @@ function DocumentLibrary({ documents, onDocumentUploaded }) {
           viewport={viewport}
         >
           <div>
-            <h2 className="docs-title">Document Library</h2>
+            <div className="docs-title-row">
+              <BlueprintIcon className="docs-title-icon" />
+              <h2 className="docs-title">Document Library</h2>
+            </div>
             <p className="docs-subtitle">Reports, submittals, and drawings for this project.</p>
           </div>
           {isAuthenticated && (
@@ -281,7 +285,10 @@ function DocumentLibrary({ documents, onDocumentUploaded }) {
             <DocGroupSkeleton />
           </>
         ) : documents.length === 0 ? (
-          <p className="docs-empty">No documents yet.</p>
+          <p className="docs-empty">
+            <BlueprintIcon className="docs-empty-icon" />
+            No documents yet.
+          </p>
         ) : (
           groups.map((group) => (
             <motion.div

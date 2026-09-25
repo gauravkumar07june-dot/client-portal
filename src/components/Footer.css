@@ -3,14 +3,15 @@
   --text-secondary: #b8bac2;
   --text-muted: #8b8d97;
   --hairline: rgba(255, 255, 255, 0.08);
-  --accent: #c084fc;
-  --accent-ink: #16171d;
+  --accent: #f59e0b;
+  --accent-ink: #0f1115;
 
-  background: #101116;
+  background: #0d0e11;
   color: var(--text-secondary);
   border-top: 1px solid var(--hairline);
   padding: 40px 20px 24px;
   box-sizing: border-box;
+  clip-path: polygon(0 20px, 100% 0, 100% 100%, 0 100%);
 }
 
 .footer-inner {
@@ -36,7 +37,9 @@
 .footer-company-name {
   font-family: var(--heading, system-ui, sans-serif);
   font-size: 16px;
-  font-weight: 600;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
   color: var(--text-primary);
   margin-bottom: 2px;
 }
@@ -73,8 +76,8 @@
   width: 36px;
   height: 36px;
   border-radius: 999px;
-  border: 1px solid rgba(192, 132, 252, 0.35);
-  background: rgba(192, 132, 252, 0.08);
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  background: rgba(245, 158, 11, 0.08);
   color: var(--accent);
   cursor: pointer;
   transition:

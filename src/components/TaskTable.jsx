@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
 import { motion } from 'motion/react'
+import { HammerIcon } from './icons/ConstructionIcons.jsx'
 import './TaskTable.css'
 
 const STATUS_META = {
@@ -94,7 +95,10 @@ function TaskTable({ packages }) {
           whileInView="show"
           viewport={viewport}
         >
-          <h2 className="tasks-title">Package Tracker</h2>
+          <div className="tasks-title-row">
+            <HammerIcon className="tasks-title-icon" />
+            <h2 className="tasks-title">Package Tracker</h2>
+          </div>
           <p className="tasks-subtitle">Status across every work package on the project.</p>
         </motion.div>
 
@@ -123,7 +127,10 @@ function TaskTable({ packages }) {
           viewport={viewport}
         >
           {!loading && packages.length === 0 ? (
-            <p className="tasks-empty">No packages yet.</p>
+            <p className="tasks-empty">
+              <HammerIcon className="tasks-empty-icon" />
+              No packages yet.
+            </p>
           ) : (
             <table className="tasks-table">
               <thead>
@@ -153,7 +160,10 @@ function TaskTable({ packages }) {
             </table>
           )}
           {!loading && packages.length > 0 && filtered.length === 0 && (
-            <p className="tasks-empty">No packages match this filter.</p>
+            <p className="tasks-empty">
+              <HammerIcon className="tasks-empty-icon" />
+              No packages match this filter.
+            </p>
           )}
         </motion.div>
       </div>

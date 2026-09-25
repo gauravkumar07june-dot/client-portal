@@ -1,19 +1,23 @@
 .tasks-section {
-  --chart-surface: #1f2028;
+  --chart-surface: #1a1c21;
   --text-primary: #ffffff;
   --text-secondary: #b8bac2;
   --text-muted: #8b8d97;
   --hairline: rgba(255, 255, 255, 0.08);
   --border-ring: rgba(255, 255, 255, 0.08);
-  --accent: #c084fc;
-  --accent-ink: #16171d;
+  --accent: #f59e0b;
+  --accent-ink: #0f1115;
+  /* "Completed" badge tone kept exactly as before the rebrand — status
+     colors are semantic and untouched, not tied to the new brand accent. */
+  --status-completed: #c084fc;
   --status-good: #0ca30c;
   --status-critical: #d03b3b;
 
-  background: #16171d;
+  background: #13151a;
   color: var(--text-secondary);
-  padding: 0 20px 80px;
+  padding: 32px 20px 80px;
   box-sizing: border-box;
+  clip-path: polygon(0 24px, 100% 0, 100% 100%, 0 100%);
 }
 
 .tasks-inner {
@@ -26,12 +30,28 @@
   margin-bottom: 24px;
 }
 
+.tasks-title-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 6px;
+}
+
+.tasks-title-icon {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  color: var(--accent);
+}
+
 .tasks-title {
   font-family: var(--heading, system-ui, sans-serif);
   font-size: clamp(24px, 5vw, 32px);
-  font-weight: 600;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
   color: var(--text-primary);
-  margin: 0 0 6px;
+  margin: 0;
 }
 
 .tasks-subtitle {
@@ -68,7 +88,7 @@
 }
 
 .tasks-filter:hover {
-  border-color: rgba(192, 132, 252, 0.35);
+  border-color: rgba(245, 158, 11, 0.4);
   color: var(--text-primary);
 }
 
@@ -154,11 +174,21 @@
 }
 
 .tasks-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
   padding: 24px 20px;
   margin: 0;
   font-size: 14px;
   color: var(--text-muted);
   text-align: center;
+}
+
+.tasks-empty-icon {
+  width: 22px;
+  height: 22px;
+  color: var(--text-muted);
 }
 
 /* Status badge */
@@ -199,7 +229,7 @@
   color: #d9b8fc;
 }
 .status-badge--accent .status-badge-dot {
-  background: var(--accent);
+  background: var(--status-completed);
 }
 
 /* Mobile: collapse table to cards */

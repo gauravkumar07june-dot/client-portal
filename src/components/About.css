@@ -1,17 +1,45 @@
 .about-section {
-  --chart-surface: #1f2028;
+  --chart-surface: #1a1c21;
   --text-primary: #ffffff;
   --text-secondary: #b8bac2;
   --border-ring: rgba(255, 255, 255, 0.08);
-  --accent: #c084fc;
+  --accent: #f59e0b;
 
-  background: #16171d;
+  position: relative;
+  background: #13151a;
   color: var(--text-secondary);
-  padding: 0 20px 80px;
+  padding: 32px 20px 80px;
   box-sizing: border-box;
+  clip-path: polygon(0 24px, 100% 0, 100% 100%, 0 100%);
+  overflow: hidden;
+}
+
+/* Faint blueprint-style grid — decorative only, kept low-opacity so it
+   never competes with text. */
+.about-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      rgba(96, 130, 168, 0.07) 0px,
+      rgba(96, 130, 168, 0.07) 1px,
+      transparent 1px,
+      transparent 32px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(96, 130, 168, 0.07) 0px,
+      rgba(96, 130, 168, 0.07) 1px,
+      transparent 1px,
+      transparent 32px
+    );
 }
 
 .about-inner {
+  position: relative;
   max-width: 1080px;
   margin: 0 auto;
 }
@@ -21,12 +49,28 @@
   margin-bottom: 32px;
 }
 
+.about-title-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 12px;
+}
+
+.about-title-icon {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  color: var(--accent);
+}
+
 .about-title {
   font-family: var(--heading, system-ui, sans-serif);
   font-size: clamp(24px, 5vw, 32px);
-  font-weight: 600;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
   color: var(--text-primary);
-  margin: 0 0 12px;
+  margin: 0;
 }
 
 .about-description {
@@ -54,9 +98,19 @@
 }
 
 .about-empty {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   margin: 0;
   padding: 12px 0;
   font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.about-empty-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
   color: var(--text-secondary);
 }
 
@@ -88,8 +142,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(192, 132, 252, 0.15);
-  border: 1px solid rgba(192, 132, 252, 0.35);
+  background: rgba(245, 158, 11, 0.15);
+  border: 1px solid rgba(245, 158, 11, 0.35);
   color: var(--accent);
   font-family: var(--heading, system-ui, sans-serif);
   font-size: 18px;
@@ -105,10 +159,10 @@
 .team-role {
   display: inline-flex;
   padding: 4px 10px;
-  border-radius: 999px;
-  border: 1px solid rgba(192, 132, 252, 0.35);
-  background: rgba(192, 132, 252, 0.1);
-  color: #d9b8fc;
+  border-radius: 3px;
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  background: rgba(245, 158, 11, 0.1);
+  color: #fdba74;
   font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.02em;

@@ -6,12 +6,15 @@
   min-height: 100svh;
   padding: 64px 20px;
   overflow: hidden;
-  background: radial-gradient(
-    120% 100% at 50% 0%,
-    #24262f 0%,
-    #16171d 55%,
-    #101116 100%
-  );
+  background-image: linear-gradient(
+      to top,
+      rgba(15, 17, 21, 0.9) 0%,
+      rgba(15, 17, 21, 0.5) 100%
+    ),
+    url('https://images.unsplash.com/photo-1609867271967-a82f85c48531?auto=format&fit=crop&w=2000&q=80');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   color: #f3f4f6;
   box-sizing: border-box;
 }
@@ -46,13 +49,14 @@
 .hero-eyebrow {
   display: inline-flex;
   padding: 6px 14px;
-  border-radius: 999px;
-  border: 1px solid rgba(192, 132, 252, 0.35);
-  background: rgba(192, 132, 252, 0.1);
-  color: #d9b8fc;
+  border-radius: 3px;
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  background: rgba(245, 158, 11, 0.12);
+  color: #fdba74;
+  font-family: var(--heading, system-ui, sans-serif);
   font-size: 13px;
   font-weight: 600;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   margin-bottom: 20px;
 }
@@ -109,12 +113,14 @@
   max-width: 280px;
   padding: 14px 28px;
   border: none;
-  border-radius: 10px;
-  background: #c084fc;
-  color: #16171d;
-  font-size: 16px;
-  font-weight: 600;
-  font-family: inherit;
+  border-radius: 3px;
+  background: #f59e0b;
+  color: #0f1115;
+  font-family: var(--heading, system-ui, sans-serif);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
   cursor: pointer;
   transition:
     background 0.2s ease,
@@ -122,7 +128,7 @@
 }
 
 .hero-cta:hover {
-  background: #d3a4fd;
+  background: #fb923c;
 }
 
 .hero-cta:active {
